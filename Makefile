@@ -1,27 +1,35 @@
 
-all: main.c_out Main.class
-run: c java lua py
+C_OUT = main.c_out
+JAVA_OUT = Main.class
+
+all: $(C_OUT) $(JAVA_OUT)
+run: c java lua php py rb
 
 
-main.c_out:
-	gcc -Wall -Wpedantic -o main.c_out main.c
+$(C_OUT):
+	gcc -Wall -Wpedantic -std=c99 -o $(C_OUT) main.c
 
-c: main.c_out
-	./main.c_out
-
-
-Main.class:
+$(JAVA_OUT):
 	javac Main.java
 
-java: Main.class
+clean:
+	rm -rvf $(C_OUT) $(JAVA_OUT)
+
+
+c: $(C_OUT)
+	./$(C_OUT)
+
+java: $(JAVA_OUT)
 	java Main
 
 lua:
 	./main.lua
 
+php:
+	./main.php
+
 py:
 	./main.py
 
-
-clean:
-	rm -rvf main.c_out Main.class
+rb:
+	./main.rb
