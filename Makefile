@@ -1,9 +1,10 @@
+CDIR = .
 
 C_OUT = main.c_out
 JAVA_OUT = Main.class
 
-all: $(C_OUT) $(JAVA_OUT)
-run: c java lua php py rb
+all build: $(C_OUT) $(JAVA_OUT)
+run: c java js lua php py rb
 
 
 $(C_OUT):
@@ -17,19 +18,23 @@ clean:
 
 
 c: $(C_OUT)
-	./$(C_OUT)
+	$(CDIR)/$(C_OUT)
 
 java: $(JAVA_OUT)
 	java Main
 
+js node:
+	$(CDIR)/main.js
+
 lua:
-	./main.lua
+	$(CDIR)/main.lua
 
 php:
-	./main.php
+	$(CDIR)/main.php
 
 py:
-	./main.py
+	$(CDIR)/main.py
 
 rb:
-	./main.rb
+	$(CDIR)/main.rb
+
