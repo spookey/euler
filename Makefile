@@ -19,22 +19,9 @@ clean:
 
 c: $(C_OUT)
 	$(CDIR)/$(C_OUT)
-
 java: $(JAVA_OUT)
 	java Main
+%: main.%
+	"$(CDIR)/$<"
 
-js node:
-	$(CDIR)/main.js
-
-lua:
-	$(CDIR)/main.lua
-
-php:
-	$(CDIR)/main.php
-
-py:
-	$(CDIR)/main.py
-
-rb:
-	$(CDIR)/main.rb
 
