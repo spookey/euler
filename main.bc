@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+LIMIT=100
+if [ -n "$1" ]; then LIMIT=$1; fi
+
+/usr/bin/env bc -s <<END
+	scale=16
+
+	define f(n) {
+		auto i;
+		r = 1
+		for(i=1; i<=n; i++) { r *= i }
+		return (r);
+	}
+
+	define c(n) {
+		auto i;
+		r = 0
+		for(i=0; i<=n; i++) { r += (1/f(i)) }
+		return (r);
+	}
+
+	c($LIMIT)
+	quit
+END

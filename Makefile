@@ -5,12 +5,12 @@ CHART_JS = $(BDIR)/Chart.min.js
 
 GEN = $(BDIR)/generate.sh
 
-C_OUT = main.c_out
-JAVA_OUT = Main.class
+C_OUT = $(CDIR)/main.c_out
+JAVA_OUT = $(CDIR)/Main.class
 
 all build: $(C_OUT) $(JAVA_OUT)
-run: c java js lua php py rb
-_: _c _java _js _lua _php _py _rb
+run: bc c java js lua php py rb
+_: _bc _c _java _js _lua _php _py _rb
 
 $(C_OUT):
 	gcc -Wall -Wpedantic -std=c99 -o $(C_OUT) main.c
@@ -41,6 +41,7 @@ java: $(JAVA_OUT)
 %: main.%
 	"$(CDIR)/$<"
 
+_bc: $(BDIR)/bc.html
 _c: $(BDIR)/c.html
 _java: $(BDIR)/java.html
 _js: $(BDIR)/js.html
