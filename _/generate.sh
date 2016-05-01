@@ -18,7 +18,7 @@ if [ -z "$1" ] || [ -z "$OUT" ]; then
 fi
 
 for ((I=0; I<=NUM; I++)); do
-    echo -en "$1 $I\r"
+    echo -en "\t$I\t$1\r"
     R=$($TIME $1 "$I" 2>&1 >/dev/null)
     COMMA="$(if [ $I -ne "$NUM" ]; then echo ", "; fi)"
     LABELS="$LABELS\"$I\"$COMMA"

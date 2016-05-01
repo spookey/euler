@@ -25,16 +25,20 @@
             margin: 0.25em 1em;
             text-align: right;
         }
+        ul {
+            list-style: none;
+        }
     </style>
 </head>
 <body>
     <canvas id="mainChart" width="1024" height="512"></canvas>
     <h1>__cmd__ __num__</h1>
     <div>created at __creationtime__</div>
+    <div id="legend"></div>
     <script type="application/javascript">
-        new Chart(
-            document.getElementById("mainChart").getContext("2d")
-        ).Line({
+    document.getElementById("legend").innerHTML = new Chart(
+        document.getElementById("mainChart").getContext("2d")).Line(
+        {
             labels: [__lables__],
             datasets: [
                 {
@@ -71,8 +75,17 @@
             ]
         }, {
             responsive: true,
-            datasetFill: false
-        });
+            datasetFill: false,
+            legendTemplate: " \
+            <ul><% for (var i = 0; i < datasets.length; i++) { %> \
+                <% if (datasets[i].label) { %><li> \
+                    <span style=\"color: <%=datasets[i].strokeColor%>;\" > \
+                        <%=datasets[i].label%> \
+                    </span> \
+                </li><% } %> \
+            <% } %></ul> \
+            "
+        }).generateLegend();
     </script>
 </body>
 </html>

@@ -6,7 +6,8 @@ CHART_JS = $(BDIR)/Chart.min.js
 GEN = $(BDIR)/generate.sh
 
 C_OUT = $(CDIR)/main.c_out
-JAVA_OUT = $(CDIR)/Main.class
+JAVA_DIR = $(CDIR)/java
+JAVA_OUT = $(JAVA_DIR)/Main.class
 SWIFTC_OUT = $(CDIR)/main.swift_out
 
 all build: $(C_OUT) $(JAVA_OUT) $(SWIFTC_OUT)
@@ -17,7 +18,8 @@ $(C_OUT):
 	gcc -Wall -Wpedantic -std=c99 -o $(C_OUT) main.c
 
 $(JAVA_OUT):
-	javac Main.java
+	mkdir $(JAVA_DIR)
+	javac -d $(JAVA_DIR) Main.java
 
 $(SWIFTC_OUT):
 	xcrun swiftc main.swift -o main.swift_out
@@ -28,7 +30,7 @@ $(CHART_JS):
 $(BDIR)/c.html: $(C_OUT) $(CHART_JS)
 	OUT="$(BDIR)/c.html" $(GEN) $(C_OUT)
 $(BDIR)/java.html: $(JAVA_OUT) $(CHART_JS)
-	OUT="$(BDIR)/java.html" $(GEN) "java Main"
+	OUT="$(BDIR)/java.html" $(GEN) "java -classpath $(JAVA_DIR) Main"
 $(BDIR)/swift.html: $(CHART_JS)
 	OUT="$(BDIR)/swift.html" $(GEN) "xcrun swift main.swift"
 $(BDIR)/swiftc.html: $(SWIFTC_OUT) $(CHART_JS)
@@ -38,7 +40,7 @@ $(BDIR)/%.html: main.% $(CDIR)/*.% $(CHART_JS)
 	OUT="$@" $(GEN) "$(CDIR)/$<"
 
 clean:
-	rm -rvf $(C_OUT) $(JAVA_OUT) $(SWIFTC_OUT)
+	rm -rvf $(C_OUT) $(JAVA_DIR) $(SWIFTC_OUT)
 _clean: clean
 	rm -rvf $(BDIR)/*.html $(CHART_JS)
 
@@ -46,7 +48,7 @@ _clean: clean
 c: $(C_OUT)
 	$(C_OUT)
 java: $(JAVA_OUT)
-	java Main
+	java -classpath $(JAVA_DIR) Main
 swift:
 	xcrun swift main.swift
 swiftc: $(SWIFTC_OUT)
