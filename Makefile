@@ -10,11 +10,12 @@ GROOVY_DIR = $(CDIR)/groovy
 GROOVY_OUT = $(GROOVY_DIR)/Main.class
 JAVA_DIR = $(CDIR)/java
 JAVA_OUT = $(JAVA_DIR)/Main.class
+RUST_OUT = $(CDIR)/main.rs_out
 SWIFTC_OUT = $(CDIR)/main.swift_out
 
-all build: $(C_OUT) $(GROOVY_OUT) $(JAVA_OUT) $(SWIFTC_OUT)
-run: bc c groovy groovyc java js lua php py rb swift swiftc
-_: _bc _c _groovy _groovyc _java _js _lua _php _py _rb _swift _swiftc
+all build: $(C_OUT) $(GROOVY_OUT) $(JAVA_OUT) $(RUST_OUT) $(SWIFTC_OUT)
+run: bc c groovy groovyc java js lua php py rb rust swift swiftc
+_: _bc _c _groovy _groovyc _java _js _lua _php _py _rb _rust _swift _swiftc
 
 $(C_OUT):
 	gcc -Wall -Wpedantic -std=c99 -o $(C_OUT) main.c
@@ -25,6 +26,9 @@ $(GROOVY_OUT):
 $(JAVA_OUT):
 	mkdir $(JAVA_DIR)
 	javac -d $(JAVA_DIR) Main.java
+
+$(RUST_OUT):
+	rustc -o $(RUST_OUT) main.rs
 
 $(SWIFTC_OUT):
 	xcrun swiftc main.swift -o main.swift_out
@@ -40,6 +44,8 @@ $(BDIR)/groovy.html: $(CHART_JS)
 	OUT="$(BDIR)/groovy.html" $(GEN) "groovy Main.groovy"
 $(BDIR)/groovyc.html: $(GROOVY_OUT) $(CHART_JS)
 	OUT="$(BDIR)/groovyc.html" $(GEN) "groovy -classpath $(GROOVY_DIR) Main"
+$(BDIR)/rust.html: $(RUST_OUT) $(CHART_JS)
+	OUT="$(BDIR)/rust.html" $(GEN) $(RUST_OUT)
 $(BDIR)/swift.html: $(CHART_JS)
 	OUT="$(BDIR)/swift.html" $(GEN) "xcrun swift main.swift"
 $(BDIR)/swiftc.html: $(SWIFTC_OUT) $(CHART_JS)
@@ -49,7 +55,7 @@ $(BDIR)/%.html: main.% $(CDIR)/*.% $(CHART_JS)
 	OUT="$@" $(GEN) "$(CDIR)/$<"
 
 clean:
-	rm -rvf $(C_OUT) $(GROOVY_DIR) $(JAVA_DIR) $(SWIFTC_OUT)
+	rm -rvf $(C_OUT) $(GROOVY_DIR) $(JAVA_DIR) $(RUST_OUT) $(SWIFTC_OUT)
 _clean: clean
 	rm -rvf $(BDIR)/*.html $(CHART_JS)
 
@@ -62,6 +68,8 @@ groovy:
 	groovy Main.groovy
 groovyc: $(GROOVY_OUT)
 	groovy -classpath $(GROOVY_DIR) Main
+rust: $(RUST_OUT)
+	$(RUST_OUT)
 swift:
 	xcrun swift main.swift
 swiftc: $(SWIFTC_OUT)
@@ -80,5 +88,6 @@ _lua: $(BDIR)/lua.html
 _php: $(BDIR)/php.html
 _py: $(BDIR)/py.html
 _rb: $(BDIR)/rb.html
+_rust: $(BDIR)/rust.html
 _swift: $(BDIR)/swift.html
 _swiftc: $(BDIR)/swiftc.html
