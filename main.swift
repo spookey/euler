@@ -1,7 +1,8 @@
 
 func factorial(n: Int) -> Double {
     var res: Double = 1
-    for var i = 1; i <= n; ++i {
+    if (n <= 1) { return res }
+    for i in 1 ... n {
         res *= Double(i)
     }
     return res
@@ -9,7 +10,7 @@ func factorial(n: Int) -> Double {
 
 func calc(n: Int) -> Double {
     var res: Double = 0
-    for var i = 0; i <= n; ++i {
+    for i in 0 ... n {
         res += (1/factorial(i))
     }
     return res
