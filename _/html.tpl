@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8"/>
     <title>__cmd__ __num__</title>
-    <script type="application/javascript" src="Chart.min.js"></script>
+    <script type="application/javascript" src=".chart.min.js"></script>
     <style type="text/css">
         html, body {
-            background: #fff;
+            background: #ffffff;
             height: 100%;
             width: 100%;
             margin: 0;
@@ -49,8 +49,8 @@
                     label: "real",
                     strokeColor: "__creal__",
                     pointColor: "__creal__",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
+                    pointStrokeColor: "#ffffff",
+                    pointHighlightFill: "#ffffff",
                     pointHighlightStroke: "__creal__",
                     data: [__dreal__]
                 },
@@ -58,8 +58,8 @@
                     label: "user",
                     strokeColor: "__cuser__",
                     pointColor: "__cuser__",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
+                    pointStrokeColor: "#ffffff",
+                    pointHighlightFill: "#ffffff",
                     pointHighlightStroke: "__cuser__",
                     data: [__duser__]
                 },
@@ -67,8 +67,8 @@
                     label: "sys",
                     strokeColor: "__csys__",
                     pointColor: "__csys__",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
+                    pointStrokeColor: "#ffffff",
+                    pointHighlightFill: "#ffffff",
                     pointHighlightStroke: "__csys__",
                     data: [__dsys__]
                 }

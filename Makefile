@@ -1,7 +1,7 @@
 CDIR = .
 BDIR = $(CDIR)/_
-CHART_JSURL = https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js
-CHART_JS = $(BDIR)/Chart.min.js
+CHART_JSURL = https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js
+CHART_JS = $(BDIR)/.chart.min.js
 
 GEN = $(BDIR)/generate.sh
 
@@ -34,7 +34,7 @@ $(SWIFTC_OUT):
 	xcrun swiftc main.swift -o main.swift_out
 
 $(CHART_JS):
-	wget -P $(BDIR) $(CHART_JSURL)
+	wget --output-document $(CHART_JS) $(CHART_JSURL)
 
 $(BDIR)/c.html: $(C_OUT) $(CHART_JS)
 	OUT="$(BDIR)/c.html" $(GEN) $(C_OUT)
